@@ -14,7 +14,8 @@ class Pagamento extends CI_Controller {
         }
         
         $this->load->Model("Model_pagamento", "pagto");
-        $this->load->Model("Model_venda", "venda");        
+        $this->load->Model("Model_venda", "venda");       
+        $this->load->Model("Model_cliente", "cliente");
     }
 
     public function index(){
@@ -39,14 +40,27 @@ class Pagamento extends CI_Controller {
     }
     
     public function novo(){
+        
+        $codEmpresa = $_SESSION["company_data"]->codEmpresa;
+        
+        $parametros = array(
+            "dadosCliente" => $this->cliente->getListagem($codEmpresa)
+        );
+        
         $this->load->view('inc/header');
         $this->load->view('inc/sidebar');
         $this->load->view('inc/menu_lateral');
         $this->load->view('inc/barra_superior');
-        $this->load->view('pagamento/cadastro');
+        $this->load->view('pagamento/cadastro', $parametros);
         $this->load->view('inc/show_messages');
     }
     
+    public function add(){
+
+        var_dump($_POST);
+
+    }
+
     public function pagamentoOS($cod){
         echo "oi";
     }
