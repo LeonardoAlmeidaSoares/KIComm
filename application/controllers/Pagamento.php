@@ -44,7 +44,8 @@ class Pagamento extends CI_Controller {
         $codEmpresa = $_SESSION["company_data"]->codEmpresa;
         
         $parametros = array(
-            "dadosCliente" => $this->cliente->getListagem($codEmpresa)
+            "dadosCliente" => $this->cliente->getListagem($codEmpresa),
+            "tipoOrigem" => CODIGO_TIPO_PAGAMENTO_AVULSO
         );
         
         $this->load->view('inc/header');
@@ -57,7 +58,28 @@ class Pagamento extends CI_Controller {
     
     public function add(){
 
-        var_dump($_POST);
+        $codEmpresa = $_SESSION["company_data"]->codEmpresa;
+
+        $parametros = array(
+            "codCliente" => intval(trim(filter_input(INPUT_POST, "txtcodCliente"))),
+            "valor" => floatval(str_replace(",",".",trim(filter_input(INPUT_POST, "txtValor")))),
+            "descricao" => trim(filter_input(INPUT_POST, "txtDescricao")),
+            "codEmpresa" => $codEmpresa,
+            "status" => STATUS_CONTA_ABERTO,
+            "codUsuarioCadastrou" => $_SESSION["user_data"]->codUsuario,
+            "tipoOrigem" => intval(trim(filter_input(INPUT_POST, "txtTipoOrigem"))),
+            "codOrigem" => intval(trim(filter_input(INPUT_POST, "txtCodOrigem"))),
+        );
+
+        if(intval(trim(filter_input(INPUT_POST, "txtPagamentoAVista"))) == 1){
+            $parametros["dataPagto"] = date('Y-m-d H:i');
+            $parametros["status"] = STATUS_CONTA_PAGO;
+            $parametros["codUsuarioFinalizou"] = $_SESSION["user_data"]->codUsuario;
+        }
+
+        //var_dump($parametros);
+        $this->db->insert("pagamento", $parametros);
+        redirect(base_url("index.php/pagamento"));
 
     }
 

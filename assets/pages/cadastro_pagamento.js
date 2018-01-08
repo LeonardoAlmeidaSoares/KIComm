@@ -5,7 +5,6 @@ $(function () {
 
     $("#txtNome").on("change", function () {
         var cod = $("#txtNome :selected").text();
-        alert(cod);
         $.ajax({
             url: '../../index.php/ajaxReq/getCliente/',
             method: 'POST',
@@ -28,9 +27,7 @@ $(function () {
     $("#frmCad").on("submit", function(evt){
         
         if(evt.originalEvent){
-
             evt.preventDefault();
-
             swal({
                 title: 'Pagamento',
                 text: "Pagamento A Vista?",
@@ -42,11 +39,11 @@ $(function () {
                 cancelButtonText: 'Não'
             }).then(function (result) {
                 $("#txtPagamentoAVista").val(1);
+                $("#frmCad").submit();
             }).catch(function(err){
                 $("#txtPagamentoAVista").val(0);
+                $("#frmCad").submit();
             });
-
-            $("#frmCad").submit();
 
         }
     });

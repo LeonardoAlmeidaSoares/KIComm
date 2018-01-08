@@ -16,8 +16,12 @@
                     <div class="block-content">
                         <form id="frmCad" action="<?= base_url("index.php/pagamento/add"); ?>" method="POST">
                             <h2 class="content-heading">Dados Pessoais</h2>
+                            
                             <input type="hidden" name="txtPagamentoAVista" id="txtPagamentoAVista" value="0" />
                             <input type="hidden" name="txtcodCliente" id="txtcodCliente" />
+                            <input type="hidden" name="txtTipoOrigem" id="txtTipoOrigem" value="<?= $tipoOrigem;?>" />
+                            <input type="hidden" name="txtCodOrigem" id="txtCodOrigem" value="<?= (isset($codOrigem)) ?$codOrigem :0;?>"/>
+
                             <div class="form-group row">
                                 <div class="col-md-6">
                                     <div class="form-material">
@@ -85,8 +89,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-material">
-                                        <input type="text" class="form-control" id="txtComplemento" name="txtComplemento">
-                                        <label for="txtComplemento">Complemento</label>
+                                        <input type="text" class="form-control" id="txtDescricao" name="txtDescricao">
+                                        <label for="txtDescricao">Descrição</label>
                                     </div>
                                 </div>
                             </div>
