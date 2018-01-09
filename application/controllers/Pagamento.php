@@ -68,6 +68,7 @@ class Pagamento extends CI_Controller {
             "codUsuarioCadastrou" => $_SESSION["user_data"]->codUsuario,
             "tipoOrigem" => intval(trim(filter_input(INPUT_POST, "txtTipoOrigem"))),
             "codOrigem" => intval(trim(filter_input(INPUT_POST, "txtCodOrigem"))),
+            "dataVencimento" => $this->util->converterDatas(trim(filter_input(INPUT_POST, "txtVencimento")))
         );
 
         if(intval(trim(filter_input(INPUT_POST, "txtPagamentoAVista"))) == 1){
