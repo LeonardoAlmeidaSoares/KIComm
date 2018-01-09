@@ -61,24 +61,13 @@ class AjaxReq extends CI_Controller {
     }
 
     public function getPendenciasFuncionario(){
+
+        $this->load->Model("Model_ordem_servico", "OS");
+
         $codFuncionario = intval(trim(filter_input(INPUT_POST, "codFuncionario")));
+        $aux = $this->OS->getPendenciasFuncionario($codFuncionario);
         
-        $arr = [
-            array(
-                "codOS" => 1,
-                "nome" => "Cliente 1",
-                "data" => '2017-21-21',
-                "status" => 1001
-            ),
-            array(
-                "codOS" => 3,
-                "nome" => "Cliente 2",
-                "data" => '2017-21-22',
-                "status" => 1003
-            )
-        ];
-        
-        echo json_encode($arr);
+        echo json_encode($aux->result_array());
     }
 
     public function updateProduto($codProduto){

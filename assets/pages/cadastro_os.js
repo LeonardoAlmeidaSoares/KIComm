@@ -19,6 +19,7 @@ function getStatus(codStatus){
         case 1002: $ret = "EM ANDAMENTO"; break;
         case 1003: $ret = "PENDENTE"; break;
     }
+
     return $ret;
 
 }
@@ -104,16 +105,16 @@ jQuery(function () {
                 $("#tblPendencias").show("slow");
                 $("#tblPendencias tbody tr").remove();
                 $.each(data, function(index, value){
-                    console.log(data[index].codOS);
+                    console.log(data[index]);
                     $("#tblPendencias tbody").append(
                         $("<tr>").append(
-                            $("<td>").html(paddingNumber(data[index].codOS))
+                            $("<td>").html(paddingNumber(data[index].codOrdemServico))
                         ).append(
                             $("<td>").html(data[index].nome)
                         ).append(
                             $("<td>").html(data[index].data)
                         ).append(
-                            $("<td>").html(getStatus(data[index].status))
+                            $("<td>").html(getStatus(parseInt(data[index].status)))
                         )
                     );
                 });

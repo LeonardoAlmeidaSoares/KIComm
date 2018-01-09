@@ -44,5 +44,14 @@ class Model_ordem_servico extends CI_Model {
             ->limit($qtd)
             ->get();
     }
-    
+        
+    public function getPendenciasFuncionario($codFuncionario){
+        return $this->db->select("os.codOrdemServico, cli.nome, DATE_FORMAT(os.dataPrevisao,'%d/%m/%y') as data, os.status") 
+                    ->from("ordem_servico os")
+                    ->join("cliente cli","cli.codCliente = os.codCliente")
+                    ->where("os.codFuncionarioResponsavel", $codFuncionario)
+                    ->where("os.status<", STATUS_OS_FINALIZADA)
+                    ->get();
+    }
+
 }
