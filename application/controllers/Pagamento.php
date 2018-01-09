@@ -14,7 +14,8 @@ class Pagamento extends CI_Controller {
         }
         
         $this->load->Model("Model_pagamento", "pagto");
-        $this->load->Model("Model_venda", "venda");        
+        $this->load->Model("Model_venda", "venda");       
+        $this->load->Model("Model_cliente", "cliente");
     }
 
     public function index(){
@@ -25,10 +26,9 @@ class Pagamento extends CI_Controller {
         
         /*Buscando dados de clientes cadastrados*/
         $parametros["pagamentos"] = $this->pagto->getListagem($codEmpresa);
-        //$parametros["clientes_com_debito"] = $this->db->get_where("pagamento", 
-        //        array("codEmpresa" => $codEmpresa, "status" => STATUS_CLIENTE_DEVENDO))->num_rows();
-        //$parametros["numClientes"] = $this->db->get_where("cliente", array("codEmpresa" => $codEmpresa))->num_rows();
-        //$parametros["numClientesProibido"] = $this->db->get_where("cliente", array("codEmpresa" => $codEmpresa, "status" => STATUS_CLIENTE_PROIBIDO))->num_rows();
+        $parametros["vencimentosHoje"] = $this->pagto->getVencimentoHoje($codEmpresa)->num_rows();
+        $parametros["vencimentosEsseMes"] = $this->pagto->getVencimentoEsseMes($codEmpresa)->num_rows();
+        $parametros["ContasVencidas"] = $this->pagto->getVencidas($codEmpresa)->num_rows();
         
         $this->load->view('inc/header');
         $this->load->view('inc/sidebar');
@@ -39,14 +39,49 @@ class Pagamento extends CI_Controller {
     }
     
     public function novo(){
+        
+        $codEmpresa = $_SESSION["company_data"]->codEmpresa;
+        
+        $parametros = array(
+            "dadosCliente" => $this->cliente->getListagem($codEmpresa),
+            "tipoOrigem" => CODIGO_TIPO_PAGAMENTO_AVULSO
+        );
+        
         $this->load->view('inc/header');
         $this->load->view('inc/sidebar');
         $this->load->view('inc/menu_lateral');
         $this->load->view('inc/barra_superior');
-        $this->load->view('pagamento/cadastro');
+        $this->load->view('pagamento/cadastro', $parametros);
         $this->load->view('inc/show_messages');
     }
     
+    public function add(){
+
+        $codEmpresa = $_SESSION["company_data"]->codEmpresa;
+
+        $parametros = array(
+            "codCliente" => intval(trim(filter_input(INPUT_POST, "txtcodCliente"))),
+            "valor" => floatval(str_replace(",",".",trim(filter_input(INPUT_POST, "txtValor")))),
+            "descricao" => trim(filter_input(INPUT_POST, "txtDescricao")),
+            "codEmpresa" => $codEmpresa,
+            "status" => STATUS_CONTA_ABERTO,
+            "codUsuarioCadastrou" => $_SESSION["user_data"]->codUsuario,
+            "tipoOrigem" => intval(trim(filter_input(INPUT_POST, "txtTipoOrigem"))),
+            "codOrigem" => intval(trim(filter_input(INPUT_POST, "txtCodOrigem"))),
+        );
+
+        if(intval(trim(filter_input(INPUT_POST, "txtPagamentoAVista"))) == 1){
+            $parametros["dataPagto"] = date('Y-m-d H:i');
+            $parametros["status"] = STATUS_CONTA_PAGO;
+            $parametros["codUsuarioFinalizou"] = $_SESSION["user_data"]->codUsuario;
+        }
+
+        //var_dump($parametros);
+        $this->db->insert("pagamento", $parametros);
+        redirect(base_url("index.php/pagamento"));
+
+    }
+
     public function pagamentoOS($cod){
         echo "oi";
     }

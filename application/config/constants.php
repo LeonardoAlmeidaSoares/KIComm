@@ -84,8 +84,8 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-defined('TITULO_DO_SITE')      OR define('TITULO_DO_SITE', 'Gerencia de Estoque');
-defined('NOME_DO_SISTEMA')	   OR define('NOME_DO_SISTEMA', 'SISTEMA DE ESTOQUE');
+defined('TITULO_DO_SITE')      OR define('TITULO_DO_SITE', 'KIComm');
+defined('NOME_DO_SISTEMA')	   OR define('NOME_DO_SISTEMA', 'KIComm - SISTEMA DE ESTOQUE');
 
 defined('MSG_TYPE_ERROR') OR define('MSG_TYPE_ERROR', -1);
 defined('MSG_TYPE_SUCCESS') OR define('MSG_TYPE_SUCCESS', 1);
@@ -108,3 +108,7 @@ defined('STATUS_OS_EM_ANDAMENTO') OR define('STATUS_OS_EM_ANDAMENTO', 1002);
 defined('STATUS_OS_PENDENTE') OR define('STATUS_OS_PENDENTE', 1003);
 defined('STATUS_OS_FINALIZADA') OR define('STATUS_OS_FINALIZADA', 1004);
 defined('STATUS_OS_ARMAZENADA') OR define('STATUS_OS_ARMAZENADA', 1005);
+
+define('CODIGO_TIPO_PAGAMENTO_VENDA', 1001);
+define('CODIGO_TIPO_PAGAMENTO_OS', 1002);
+define('CODIGO_TIPO_PAGAMENTO_AVULSO', 1003);

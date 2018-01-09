@@ -18,7 +18,7 @@
                             </div>
                         </div>
                         <div class="py-20 text-center">
-                            <div class="font-size-h2 font-w700 mb-0 text-info js-count-to-enabled" data-toggle="countTo" data-to="<?= 0;?>"><?= 0;?></div>
+                            <div class="font-size-h2 font-w700 mb-0 text-info js-count-to-enabled" data-toggle="countTo" data-to="<?= $vencimentosEsseMes;?>"><?= $vencimentosEsseMes;?></div>
                             <div class="font-size-sm font-w600 text-uppercase text-muted">Vencendo Esse Mês</div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div class="py-20 text-center">
-                            <div class="font-size-h2 font-w700 mb-0 text-warning js-count-to-enabled" data-toggle="countTo" data-to="<?= 0;?>"><?= 0;?></div>
+                            <div class="font-size-h2 font-w700 mb-0 text-warning js-count-to-enabled" data-toggle="countTo" data-to="<?= $ContasVencidas;?>"><?= $ContasVencidas;?></div>
                             <div class="font-size-sm font-w600 text-uppercase text-muted">Vencidas</div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                             </div>
                         </div>
                         <div class="py-20 text-center">
-                            <div class="font-size-h2 font-w700 mb-0 text-danger js-count-to-enabled" data-toggle="countTo" data-to="<?= 0;?>"><?= 0;?></div>
+                            <div class="font-size-h2 font-w700 mb-0 text-danger js-count-to-enabled" data-toggle="countTo" data-to="<?= $vencimentosHoje;?>"><?= $vencimentosHoje;?></div>
                             <div class="font-size-sm font-w600 text-uppercase text-muted">Vencendo Hoje</div>
                         </div>
                     </div>
@@ -85,15 +85,18 @@
 
         <div class="block">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Vendas <small>Listagem</small></h3>
+                <h3 class="block-title">Pagamentos <small>Listagem</small></h3>
             </div>
             <div class="block-content">
                 <table id="table" class="table table-bordered table-striped table-vcenter js-dataTable-full dataTable no-footer">
                     <thead>
                         <tr>
                             <th>Código</th>
+                            <th>Descrição</th>
                             <th>Cliente</th>
-                            <th>Telefone</th>
+                            <th>Data de Vencimento</th>
+                            <th>Status</th>
+                            <th>Valor</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -101,10 +104,13 @@
                         <?php foreach ($pagamentos->result() as $item) { ?>
                             <tr>
                                 <td><?= str_pad($item->codPagamento, 8, "0", STR_PAD_LEFT); ?></td>
+                                <td><?= $item->descricao; ?></td>
                                 <td><?= $item->nome; ?></td>
-                                <td><?= $item->titulo; ?></td>
+                                <td><?= $item->data; ?></td>
+                                <td><?= $item->nome; ?></td>
+                                <td>R$ <?= number_format($item->valor, 2, ',', '.'); ?></td>
                                 <td>
-                                    <a href="<?= base_url("index.php/pagamento/pagamentoCompra/$item->codVenda");?>"><span class="fa fa-2x fa-credit-card"></span></a>
+                                    <a href="<?= base_url("index.php/pagamento/pagamentoCompra/$item->codPagamento");?>"><span class="fa fa-2x fa-credit-card"></span></a>
                                 </td>
                             </tr>
                         <?php } ?>
