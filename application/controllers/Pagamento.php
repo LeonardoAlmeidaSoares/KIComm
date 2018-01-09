@@ -26,10 +26,9 @@ class Pagamento extends CI_Controller {
         
         /*Buscando dados de clientes cadastrados*/
         $parametros["pagamentos"] = $this->pagto->getListagem($codEmpresa);
-        //$parametros["clientes_com_debito"] = $this->db->get_where("pagamento", 
-        //        array("codEmpresa" => $codEmpresa, "status" => STATUS_CLIENTE_DEVENDO))->num_rows();
-        //$parametros["numClientes"] = $this->db->get_where("cliente", array("codEmpresa" => $codEmpresa))->num_rows();
-        //$parametros["numClientesProibido"] = $this->db->get_where("cliente", array("codEmpresa" => $codEmpresa, "status" => STATUS_CLIENTE_PROIBIDO))->num_rows();
+        $parametros["vencimentosHoje"] = $this->pagto->getVencimentoHoje($codEmpresa)->num_rows();
+        $parametros["vencimentosEsseMes"] = $this->pagto->getVencimentoEsseMes($codEmpresa)->num_rows();
+        $parametros["ContasVencidas"] = $this->pagto->getVencidas($codEmpresa)->num_rows();
         
         $this->load->view('inc/header');
         $this->load->view('inc/sidebar');
