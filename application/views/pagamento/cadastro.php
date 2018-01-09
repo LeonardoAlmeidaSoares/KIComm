@@ -108,4 +108,7 @@
         </div>
     </div>
     <script src="<?= base_url("assets/js/plugins/jquery-mask-plugin/dist/jquery.mask.min.js");?>" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/pt-br.js" type="text/javascript"></script>
+    <script src="<?= base_url("assets/js/plugins/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"); ?>" type="text/javascript"></script>
     <script src="<?= base_url("assets/pages/cadastro_pagamento.js");?>" type="text/javascript"></script>
